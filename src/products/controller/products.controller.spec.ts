@@ -6,7 +6,7 @@ import { DatabaseModule } from '../../database/database.module';
 import { ConfigModule } from '@nestjs/config';
 import configuration from '../../config/configuration.config';
 
-fdescribe('ProductsController', () => {
+describe('ProductsController', () => {
   let controller: ProductsController;
   let productService: ProductService;
 
