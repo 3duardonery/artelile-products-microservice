@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import configurationConfig from 'src/config/configuration.config';
+import configurationConfig from '../config/configuration.config';
 
 export const databaseProviders = [
   {
