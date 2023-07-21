@@ -1,10 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductService } from './product.service';
 import { productProvider } from '../providers/product.provider';
-import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from '../../database/database.module';
-import configuration from '../../config/configuration.config';
-import { getModelToken } from '@nestjs/mongoose';
 import { ProductDto } from '../dto/product.dto';
 import { Model } from 'mongoose';
 import { Product } from '../models/product.interface';
@@ -37,13 +33,7 @@ describe('ProductService', () => {
           },
         },
       ],
-      imports: [
-        ConfigModule.forRoot({
-          load: [configuration],
-          isGlobal: true,
-        }),
-        DatabaseModule,
-      ],
+      imports: [],
     }).compile();
 
     service = module.get<ProductService>(ProductService);
