@@ -13,6 +13,14 @@ describe('ProductsController', () => {
     price: 0.45,
   };
 
+  const updateProduct: any = {
+    name: '',
+    description: '',
+    createdAt: new Date(20, 7, 2022),
+    price: 0.45,
+    _id: '123',
+  };
+
   const mockProduct: any = {
     name: '',
     description: '',
@@ -32,6 +40,7 @@ describe('ProductsController', () => {
           useValue: {
             create: jest.fn().mockResolvedValue(createdProduct),
             getByName: jest.fn().mockResolvedValue(listProducts),
+            update: jest.fn().mockResolvedValue(updateProduct),
           },
         },
       ],
@@ -74,6 +83,21 @@ describe('ProductsController', () => {
       // ASSERT
       expect(getByNameSpy).toHaveBeenCalledWith('test');
       expect(result.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('#update', () => {
+    it('should update a product', async () => {
+      // ARRANGE
+      const createSpy = jest
+        .spyOn(productService, 'update')
+        .mockResolvedValueOnce(updateProduct);
+
+      // ACT
+      await controller.patchProduct(updateProduct);
+
+      // ASSERT
+      expect(createSpy).toHaveBeenCalledWith(updateProduct);
     });
   });
 });

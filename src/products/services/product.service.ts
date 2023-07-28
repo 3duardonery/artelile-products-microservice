@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { Product } from '../models/product.interface';
 import { ProductDto } from '../dto/product.dto';
+import { UpdateProductDto } from '../dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
@@ -19,5 +20,15 @@ export class ProductService {
     return this.productModel
       .find({ name: { $regex: new RegExp(name, 'i') } })
       .exec();
+  }
+
+  async update(product: UpdateProductDto): Promise<Product> {
+    return this.productModel.findByIdAndUpdate(
+      product._id,
+      { ...product, updatedAt: new Date() },
+      {
+        new: true,
+      },
+    );
   }
 }
