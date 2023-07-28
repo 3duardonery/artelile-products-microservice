@@ -21,6 +21,8 @@ describe('ProductsController', () => {
     id: '123456',
   };
 
+  const listProducts = [mockProduct];
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProductsController],
@@ -29,6 +31,7 @@ describe('ProductsController', () => {
           provide: ProductService,
           useValue: {
             create: jest.fn().mockResolvedValue(createdProduct),
+            getByName: jest.fn().mockResolvedValue(listProducts),
           },
         },
       ],
@@ -55,6 +58,22 @@ describe('ProductsController', () => {
 
       // ASSERT
       expect(createSpy).toHaveBeenCalledWith(createdProduct);
+    });
+  });
+
+  describe('#getByName', () => {
+    it('should list by name', async () => {
+      // ARRANGE
+      const getByNameSpy = jest
+        .spyOn(productService, 'getByName')
+        .mockResolvedValueOnce(listProducts);
+
+      // ACT
+      const result = await controller.getByName('test');
+
+      // ASSERT
+      expect(getByNameSpy).toHaveBeenCalledWith('test');
+      expect(result.length).toBeGreaterThan(0);
     });
   });
 });

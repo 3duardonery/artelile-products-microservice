@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -16,5 +18,10 @@ export class ProductsController {
   @UsePipes(new ValidationPipe({ transform: true }))
   async create(@Body() createProduct: ProductDto) {
     return this.productService.create(createProduct);
+  }
+
+  @Get()
+  async getByName(@Query('name') name: string) {
+    return this.productService.getByName(name);
   }
 }

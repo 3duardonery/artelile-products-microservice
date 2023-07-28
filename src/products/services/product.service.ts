@@ -14,4 +14,10 @@ export class ProductService {
 
     return createdProduct;
   }
+
+  async getByName(name: string): Promise<Product[]> {
+    return this.productModel
+      .find({ name: { $regex: new RegExp(name, 'i') } })
+      .exec();
+  }
 }
